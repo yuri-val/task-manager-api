@@ -18,6 +18,7 @@ gem "rack-cors", "~> 2.0.2"
 gem "sidekiq", "~> 7.3.5"
 gem "sidekiq-scheduler", "~> 5.0.6"
 gem "money-rails", "~> 1.15.0"
+gem "money-open-exchange-rates", "~> 1.4.0"
 gem "wicked_pdf", "~> 2.8.2"
 
 group :development do
@@ -31,6 +32,7 @@ group :development, :test do
   gem "rspec-rails", "~> 7.1.0"
   gem "factory_bot_rails", "~> 6.4.4"
   gem "faker", "~> 3.5.1"
+  gem "dotenv-rails",  "~> 3.1.4"
 end
 
 group :test do
