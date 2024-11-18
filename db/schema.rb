@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_15_234232) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_18_215824) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
+
+  create_table "client_contacts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "client_id", null: false
+    t.string "name"
+    t.string "email"
+    t.string "phone"
+    t.string "position"
+    t.text "notes"
+    t.string "tax_identification_number"
+    t.boolean "main_contact", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_client_contacts_on_client_id"
+  end
 
   create_table "clients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
@@ -84,5 +98,6 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_15_234232) do
     t.index ["role"], name: "index_users_on_role"
   end
 
+  add_foreign_key "client_contacts", "clients"
   add_foreign_key "exchange_rates", "currencies"
 end

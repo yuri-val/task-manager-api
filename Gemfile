@@ -23,6 +23,7 @@ gem "wicked_pdf", "~> 2.8.2"
 
 group :development do
   gem "kamal", "~> 2.3.0", require: false
+  gem "annotaterb"
 end
 
 group :development, :test do
