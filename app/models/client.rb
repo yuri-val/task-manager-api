@@ -13,7 +13,9 @@
 #
 class Client < ApplicationRecord
   belongs_to :rate_currency, class_name: "Currency"
+
   has_many :client_contacts, dependent: :destroy
+  has_many :projects, dependent: :destroy
 
   monetize :rate_cents, with_model_currency: :rate_currency_id
 

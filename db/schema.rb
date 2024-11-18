@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_18_215824) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_18_222254) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -80,6 +80,16 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_18_215824) do
     t.index ["jti"], name: "index_jwt_denylists_on_jti"
   end
 
+  create_table "projects", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "client_id"
+    t.string "name"
+    t.text "description"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_projects_on_client_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -100,4 +110,5 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_18_215824) do
 
   add_foreign_key "client_contacts", "clients"
   add_foreign_key "exchange_rates", "currencies"
+  add_foreign_key "projects", "clients"
 end
