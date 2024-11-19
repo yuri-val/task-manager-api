@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 
 # Common gems (used in all environments)
+gem "csv"
 gem "rails", "~> 8.0.0"
 gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"

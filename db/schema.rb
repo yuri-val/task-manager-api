@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_18_222254) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_19_214432) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -90,6 +90,25 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_18_222254) do
     t.index ["client_id"], name: "index_projects_on_client_id"
   end
 
+  create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.date "date"
+    t.uuid "client_id", null: false
+    t.uuid "project_id", null: false
+    t.string "name"
+    t.text "description"
+    t.integer "status"
+    t.decimal "estimated_hours"
+    t.decimal "spent_hours"
+    t.integer "rate_cents", default: 0, null: false
+    t.string "rate_currency_id", limit: 8, default: "USD", null: false
+    t.uuid "assigned_to_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assigned_to_id"], name: "index_tasks_on_assigned_to_id"
+    t.index ["client_id"], name: "index_tasks_on_client_id"
+    t.index ["project_id"], name: "index_tasks_on_project_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -111,4 +130,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_18_222254) do
   add_foreign_key "client_contacts", "clients"
   add_foreign_key "exchange_rates", "currencies"
   add_foreign_key "projects", "clients"
+  add_foreign_key "tasks", "clients"
+  add_foreign_key "tasks", "projects"
+  add_foreign_key "tasks", "users", column: "assigned_to_id"
 end

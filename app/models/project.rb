@@ -21,7 +21,7 @@
 class Project < ApplicationRecord
   belongs_to :client, optional: true
 
-  enum :status, { active: 0, archived: 1 }, _default: :active
+  enum :status, { active: 0, archived: 1 }, default: :active
 
   validates :name, presence: true, uniqueness: { scope: :client_id }
   validates :status, presence: true
